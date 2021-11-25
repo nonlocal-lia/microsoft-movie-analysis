@@ -1,71 +1,76 @@
-# Phase 1 Project Template - Minimum Viable Product (MVP)
+![Header Image](/images/director_shot.jpeg)
 
-![blueprint](images/blueprint.png)
-
-This repository is like a blueprint, providing structure for your first End of Phase Project. We suggest you base your Phase 1 project off of this repository so you can focus less on formatting and organization, and more on the _analysis and communication skills_ that will support your progress through the course. This template is designed to make your project portfolio-ready in order to impress the future employers who will review it. 
-
-## Repository Contents
-
-Below is a list of the contents of this repository - instructions for using them are in the next section.
-
-- `README.md`: The README for this repo branch explaining it's contents - you're reading it now
-- `TEMPLATE_README.md`: An example of a project README that provides a brief overview of your whole project
-- `dsc-phase1-project-template.ipynb`: A starter Jupyter Notebook with headings, code examples and guiding questions
-- `DS_Project_Presentation_Template.pdf`: A starter slide deck presenting your project - here is an [editable version](https://docs.google.com/presentation/d/1PaiH1bleXnhiPjTPsAXQSiAK0nkaRlseQIr_Yb-0mz0/copy)
-- `data` folder: A folder for the data you reference with your code
-- `images` folder: A folder for the images you reference in your files 
-- `.gitignore`: A hidden file that tells git to not track certain files and folders
-
-## Instructions For Using This Repository
-
-### Fork This Repository
-
-**For a group project**, have only one team member do these steps:
-
-1. Fork this repository to your personal account
-   - In GitHub, go to this repository and click the "Fork" button in the upper right
-   
-2. Change the name of your fork of this repo to a _descriptive_ name of your choosing
-   - In GitHub, go to your fork of this repo -> "Settings" -> "Options" -> "Repository Name" -> "Rename"
-   - Make the name descriptive, since potential employers will read it. Ex: "Microsoft-Movie-Analysis" is better than "Project-1"
-
-3. Use `git clone` to clone your fork of this repo to your local computer
-
-4. **For a group project**, add team members as collaborators to your fork of this repo
-   - In GitHub, go to your fork of this repo -> "Settings" -> "Manage Access" -> "Invite Teams or People"
-   - Add your project team members as collaborators & send them the repo GitHub URL
-
-### Work In Your Fork Of This Repository
-
-- Work in the repo clone that you created on your local machine
-- Start writing and coding in the Jupyter Notebook `dsc-phase1-project-template.ipynb`
-- Fill in the README template in `TEMPLATE_README.md`
-- Use `git add`, `git commit`, and `git push` often to update your repo in GitHub
-   - For a refresher on how to do this and why it's important, review Topic 2: Bash and Git
-
-### Use The Slide Template
-
-1. Go to [this link](https://docs.google.com/presentation/d/1PaiH1bleXnhiPjTPsAXQSiAK0nkaRlseQIr_Yb-0mz0/copy) to make an editable copy of the slide deck in your own Google Drive account
-2. Go to "Slide," select "Change Theme," and pick a theme you like so your presentation doesn't look like everyone else's
-3. **For a group project**, click the "Share" button and add your teammates as editors
-
-### Tidy Up Your Project
-
-- Change the file name of the Jupyter Notebook (`dsc-phase1-project-template.ipynb`) to something more descriptive
-- Save an appropriately-named PDF version of your slide deck to the repository
-- Rename the template readme you've been working in by running `git mv TEMPLATE_README.md README.md`
-- Delete unnecessary files from the repo using `git rm`
-   - The presentation PDF: `DS_Project_Presentation_Template.pdf`
-   - This README file: `README.md`
-   - Any unused data files in the `data` folder
-   - Any unused images in the `images` folder
-
-### Submit Your Project
-
-To submit your project, please follow the instructions in the "Project Submission & Review" page in the Milestones course.
-
+# Microsoft Movie Market Analysis
 ***
-### Notes
+Author: [Lia Elwonger](mailto:lelwonger@gmail.com)
 
-- The visualizations in the notebook use best practices for visualization that you should try to emulate. For example, they have clear axes, descriptive titles, and appropriate number formatting
-- The `dsc-phase1-project-template.ipynb` is intended to be the _final version_ of your project. The first notebook you create will not look like this. You are encouraged to start with a very disorderly notebook and clean it as you go
+## Overview
+***
+This project analyzes data from [IMDb](imdb.com) and [The Numbers](the-numbers.com) to produce recommendations
+for a hypothetical attempt by Microsoft to start a movie studio. Descriptive analysis of the relationship between
+director, genre and release date are used to produce three recommendations for their first film release.
+
+## Business Problem
+***
+Microsoft has decided to create a new movie studio, but they lack experience in this market. There are many difficult problems facing new studios entering the market.
+
+To aid in this endeavor we will give recommendations to help address three core problems that any studio will have to answer in the course of making a project:
+
+* Determining what type of project to pursue.
+* Determining what talent should be hired.
+* Determining the timeline of the project.
+
+To help answer elements of these problems we will investigate the answers to three related questions:
+
+* What genre has had the high average profit in the past 20 years?
+* What directors have had the highest average return in that genre?
+* What month of the year is good to release a major film?
+
+## Data
+***
+Data from IMDb provided information on the genre of films as well as their directors. Budget and ticket revenue was 
+taken from The Numbers. The data was filtered to include only movies with budgets over $10 million produced in the last 20 years
+to avoid including data of little revelance to the Microsoft project.
+
+## Methods
+***
+Data was grouped by genre and the mean and std of the worldwide profit for each genre was calculated.
+The data was also grouped by release monthn and the mean and std of the profit was calculated.
+Once a recommended genre was selected, the director data was filtered by genre and the mean and total profit
+that each director earned within that genre was calculated.
+
+## Results
+***
+The genre with the highest average profit of big budget movies with more than 20 films in the past 20 years is
+the Sci-Fi genre, followed closely by the Animation genre. Sci-Fi is a more risky pick thatn animation, but synergizes
+well with microsofts other properties and has the chance of the highest rewards
+
+![Genre Chart](/images/genre_chart.png)
+
+The month with the highest mean profit in the past 20 years is May, it is also a bit more risky than July.
+
+![Date Chart](/images/release_chart.png)
+
+The director with the highest mean profit per Sci-Fi movie release was Colin Trevorrow, but only release 1 Sci-FI film (Jurrasic WOrld)
+Josh Wheedon is the second highest, with more than one film in his track record.
+
+![Director Chart](/images/director_chart.png)
+
+## Conclusions
+***
+Stated recommendations:
+
+* Release a Sci-Fi film.
+* Hire Joss Whedon to direct it.
+* Aim to release the movie in May with July as a backup in case of delays.
+
+### Limitations and Future Work
+The calculation of the profit ofr each film only included ticket revenue and production budget. It did not include marketing budget
+nor did it include any revenues from associate film mechandise.
+
+Further analysis and research could help
+
+* Reanalyze profit data with data on marketing budgets
+* Investigate what merchadising profits look like for a film of this sort
+* Investigate whether Microsoft has existing media brands that would fit well with a Sci-Fi film.
+* Investigate sales in the Sci-Fi novel genre and see if any highly selling books would make for a good adaptation.
