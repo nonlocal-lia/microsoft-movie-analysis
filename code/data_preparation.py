@@ -1,44 +1,165 @@
-"""
-This module is for your data cleaning.
-It should be repeatable.
-If you are combining different data sources you might need a few different functions
-
-## Data links:
-
-
-## SUPPORT FUNCTIONS
-There can be an unlimited amount of support functions.
-Each support function should have an informative name and return the partially cleaned bit of the dataset.
-"""
 import pandas as pd
+import numpy as np
+from dateutil import parser
+from datetime import date
 
-def support_function_one(example):
-    """This one might read in the data from imdb and clean it"""
-    return example
 
-def support_function_two(example):
-    """This function might read in and clean a different data source"""
-    return example
-
-def support_function_three(example):
-    """This one might merge the above two sources and create a few new variables"""
-    return example
-
-def full_clean():
+def make_budget_genre_table(budgets_df, genres_df):
     """
-    This is the one function called that will run all the support functions.
-    Assumption: 
-        - Your data files will be saved in a data folder and named "dirty_data.csv"
-        - OR you might read directly from a few urls
-        - this code is guidance, not rules
-
-    :return: cleaned dataset to be passed to hypothesis testing and visualization modules.
+    Takes in two pandas dataframes containing budgets, release date
+    and genre info and joins them by movie title and release year
     """
-    dirty_data = pd.read_csv("./data/dirty_data.csv")
+    temp_df = pd.DataFrame()
+    temp_df = budgets_df.rename(columns={'movie': 'primary_title'})
+    temp_df['release_date'] = temp_df['release_date'].map(
+        lambda x: parser.parse(x))
+    temp_df['start_year'] = temp_df['release_date'].dt.year
+    budget_genre_df = pd.merge(temp_df, genres_df, on=[
+                               'primary_title', 'start_year'], how='inner')
+    budget_genre_df.drop(
+        columns=['original_title', 'runtime_minutes'], inplace=True)
+    return budget_genre_df
 
-    cleaning_data1 = support_function_one(dirty_data)
-    cleaning_data2 = support_function_two(cleaning_data1)
-    cleaned_data= support_function_three(cleaning_data2)
-    cleaned_data.to_csv('./data/cleaned_for_testing.csv')
-    
-    return cleaned_data
+
+def money_to_int(df_column):
+    """
+    Takes in a pandas df column with strings representing dollar and returns the column in int
+    """
+    return df_column.map(lambda x: int(x[1:].replace(',', '')))
+
+
+def filter_by_year_budget(df, year, budget):
+    """
+    Takes in a pd.df, a year in int, and a budget in int, and returns
+    a df removing all the rows prior to that year and with less than that budget.
+    """
+    df['production_budget'] = money_to_int(df['production_budget'])
+    df = df[df['production_budget'] >= budget]
+    df = df[df['start_year'] >= year]
+    df['worldwide_gross'] = money_to_int(df['worldwide_gross'])
+    df['domestic_gross'] = money_to_int(df['domestic_gross'])
+    df['profit'] = df.worldwide_gross - df.production_budget
+    return df
+
+
+def make_profession_table(principles_df, names_df, profession):
+    """
+    Takes in two pandas dataframes containing talent names and the movies they worked on,
+    and joins them, drops irrelevant columns and filters by the input profession string
+    """
+    p_df = principles_df.drop(columns=['job', 'characters'])
+    n_df = names_df.drop(
+        columns=['birth_year', 'death_year', 'known_for_titles']).dropna()
+    p_df.set_index('nconst', inplace=True)
+    n_df.set_index('nconst', inplace=True)
+    name_profession_df = p_df.join(n_df, how='left')
+    name_profession_df = name_profession_df[name_profession_df["category"].str.contains(
+        profession) == True]
+    return name_profession_df
+
+
+def make_complete_table(budget_genre_df, name_profession_df):
+    """
+    Takes in two pandas dataframes containing budgets/genre info and profession/name data
+    and joins them by the title key of the movies, and drops irrelevant columns
+    """
+    bg_df = budget_genre_df.set_index('tconst')
+    np_df = name_profession_df.reset_index()
+    np_df.set_index('tconst', inplace=True)
+    complete_df = np_df.join(bg_df, how='left')
+    complete_df = complete_df.drop(
+        columns=['ordering', 'primary_profession', 'id', 'start_year'])
+    complete_df.dropna(inplace=True)
+    return complete_df
+
+
+def list_genres(df):
+    """
+    Takes a pandas dataframe and returns a list of the unique genres in the df.
+    """
+    genre_list = []
+    for entry in list(df['genres']):
+        genres = entry.split(',')
+        for genre in genres:
+            if genre not in genre_list:
+                genre_list.append(genre)
+    return genre_list
+
+
+def count_genres(genre_list, df):
+    genre_count = dict.fromkeys(genre_list, 0)
+    for entry in list(df['genres']):
+        genres = entry.split(',')
+        for genre in genres:
+            genre_count[genre] += 1
+    return genre_count
+
+
+def genre_filter(df, genre):
+    """
+    Takes a pd dataframe and filters the dataframe to only contain those movies of the specified genre
+    """
+    return df[df["genres"].str.contains(genre) == True]
+
+
+def genre_stats(df, genres, n):
+    """
+    Takes a dataframe, a list of all the desired genres, and a miminum sample number
+    and returns a df with the mean and std of the profit in millions
+    for each genre with more than n samples in the df.
+    """
+    m_s_dict = {}
+    for genre in genres:
+        profit_df = genre_filter(df, genre)["profit"]
+        data_mean = profit_df.mean()/1000000
+        data_std = profit_df.std()/1000000
+        m_s_dict[genre] = [data_mean, data_std]
+    genre_stats_df = pd.DataFrame.from_dict(m_s_dict)
+    genre_stats_df.index = ['Mean Profit', 'Std of Profit']
+    genre_stats_df = genre_stats_df.transpose().sort_values(
+        'Mean Profit', ascending=False)
+    genre_count = count_genres(genres, df)
+    small_genre = [key for key in genre_count.keys() if genre_count[key] <= n]
+    genre_stats_df.drop(small_genre, inplace=True)
+    return genre_stats_df
+
+
+def by_month_stats(df):
+    """
+    Takes in a pandas dataframe, groups it by month or release,
+    calculates the mean and std of profit by month of release,
+    and returns a df filtered to only contain columns with the month of the release date
+    and the mean and std of the profits for each monthin millions of dollars
+    """
+    release_df = pd.DataFrame()
+    release_df['release_month'] = df['release_date'].map(lambda x: x.month)
+    release_df['profit'] = df['profit'].map(lambda x: x/1000000)
+    mean_df = release_df.groupby(by='release_month').mean()
+    release_df = release_df.groupby(by='release_month').std()
+    release_df.rename(columns={'profit': 'Std of Profit'}, inplace=True)
+    release_df['Mean Profit'] = mean_df['profit']
+    return release_df
+
+
+def profession_stats(df, genre):
+    """
+    Takes in a pandas dataframe, filters it by genre, groups it by the names of the people,
+    and calculates the mean and total profit made by each person
+    and returns a df filtered to only contain columns with 
+    and the mean and std of the profits in millions of dollars for each named person
+    """
+    profession_stats_df = pd.DataFrame()
+    base_df = df[df['genres'].str.contains(genre) == True]
+    base_df = base_df.drop(
+        columns=['worldwide_gross', 'domestic_gross', 'production_budget'])
+    profession_stats_df = base_df.groupby(by='primary_name').mean()
+    profession_stats_df['profit'] = profession_stats_df['profit'].map(
+        lambda x: x/1000000)
+    profession_stats_df.rename(
+        columns={'profit': 'Mean Profit'}, inplace=True)
+    total_df = base_df.groupby(by='primary_name').sum()
+    total_df['profit'] = total_df['profit'].map(lambda x: x/1000000)
+    profession_stats_df['Total Profit'] = total_df['profit']
+    profession_stats_df.sort_values(
+        by='Mean Profit', ascending=False, inplace=True)
+    return profession_stats_df
