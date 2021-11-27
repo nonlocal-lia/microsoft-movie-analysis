@@ -47,12 +47,12 @@ well with microsofts other properties and has the chance of the highest rewards
 
 ![Genre Chart](/images/genre_chart.png)
 
-The month with the highest mean profit in the past 20 years is May, it is also a bit more risky than July.
+The month with the highest mean profit for Sci-Fi movies in the past 20 years is May, it is also has fairly low variance.
 
 ![Date Chart](/images/release_chart.png)
 
-The director with the highest mean profit per Sci-Fi movie release was Colin Trevorrow, but only release 1 Sci-FI film (Jurrasic WOrld)
-Josh Wheedon is the second highest, with more than one film in his track record.
+The director with the highest mean profit per Sci-Fi movie release was Colin Trevorrow, but only release 1 Sci-FI film (Jurrasic World)
+Joss Whedon is the second highest, with more than one film in his track record.
 
 ![Director Chart](/images/director_chart.png)
 
@@ -62,7 +62,7 @@ Stated recommendations:
 
 * Release a Sci-Fi film.
 * Hire Joss Whedon to direct it.
-* Aim to release the movie in May with July as a backup in case of delays.
+* Aim to release the movie in May with June as a backup in case of delays.
 
 ### Limitations and Future Work
 The calculation of the profit ofr each film only included ticket revenue and production budget. It did not include marketing budget
