@@ -73,3 +73,24 @@ Further analysis and research could help
 * Reanalyze profit data with data on marketing budgets
 * Investigate whether Microsoft has existing media brands that would fit well with a Sci-Fi film.
 * Investigate sales in the Sci-Fi novel genre and see if any highly selling books would make for a good adaptation.
+
+***
+
+## For More Information
+
+Please review my full analysis in [our Jupyter Notebook](./microsoft-movie-analysis.ipynb) or our [presentation](./Microsoft Movie Presentation.pdf).
+
+For any additional questions, please contact **Lia Elwonger lelwonger@gmail.com**
+
+## Repository Structure
+
+Describe the structure of your repository and its contents, for example:
+
+```
+├── README.md                           <- The top-level README for reviewers of this project
+├── microsoft-movie-analysis.ipynb      <- Narrative documentation of analysis in Jupyter notebook
+├── Microsoft Movie Presentation.pdf    <- PDF version of project presentation
+├── data                                <- Both sourced externally and generated from code
+├── code                                <- Functions for cleaning the data and constructing visualizations
+└── images                              <- Both sourced externally and generated from code
+```
