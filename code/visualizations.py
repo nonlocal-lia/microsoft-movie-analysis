@@ -42,7 +42,7 @@ def plot_top_ten(df, column_name, y_label):
     """
     c = ['b', 'r']
     output_plot = df.sort_values(by=column_name).tail(10).plot.barh(color=c)
-    output_plot.set(xlabel="Dollars in Millons", ylabel=y_label,
+    output_plot.set(xlabel="Dollars in Millions", ylabel=y_label,
                     title="Mean and Std of Profit by {}".format(y_label))
     output_plot
     return output_plot
