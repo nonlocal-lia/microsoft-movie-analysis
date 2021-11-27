@@ -1,27 +1,75 @@
-# Phase 1 Project Template - Above and Beyond (AAB)
+![Header Image](/images/director_shot.jpeg)
 
-This version of the repository template builds upon the MVP version. It incorporates best practices for project organization and code modularization.
+# Microsoft Movie Market Analysis
+***
+Author: [Lia Elwonger](mailto:lelwonger@gmail.com)
 
-## Code Modularization
+## Overview
+***
+This project analyzes data from [IMDb](imdb.com) and [The Numbers](the-numbers.com) to produce recommendations
+for a hypothetical attempt by Microsoft to start a movie studio. Descriptive analysis of the relationship between
+director, genre and release date are used to produce three recommendations for their first film release.
 
-The main difference between this AAB version and the MVP version is modularization of code. Code for data preparation and visualization is placed in separate .py files that are then imported into the Jupyter Notebook. This allows your Jupyter Notebook to be much easier for a third party to run and interpret, without having to weed through all the messy details. Modularizing code is a key programming skill that makes it easy to maintain, upgrade, and deploy your projects. Doing this will not only make it easier for you to work on your projects, but it will also show potential employers that you value usability in your code.
+## Business Problem
+***
+Microsoft has decided to create a new movie studio, but they lack experience in this market. There are many difficult problems facing new studios entering the market.
 
-Note that you must include the `__init__.py` files in the root directory and subfolders containing any code that you wish to import.
+To aid in this endeavor we will give recommendations to help address three core problems that any studio will have to answer in the course of making a project:
 
-## Repository Contents
+* Determining what type of project to pursue.
+* Determining what talent should be hired.
+* Determining the timeline of the project.
 
-Below is a list of the contents of this repository.
+To help answer elements of these problems we will investigate the answers to three related questions:
 
-- `README.md`: The README for this repo branch explaining it's contents - you're reading it now
-- `TEMPLATE_README.md`: An example of a project README that provides a brief overview of your whole project
-- `dsc-phase1-project-template.ipynb`: A starter Jupyter Notebook with headings, code examples and guiding questions
-- `DS_Project_Presentation_Template.pdf`: A starter slide deck presenting your project - here is an [editable version](https://docs.google.com/presentation/d/1PaiH1bleXnhiPjTPsAXQSiAK0nkaRlseQIr_Yb-0mz0/copy)
-- `__init__.py`: Python helper file that tells Python that there are packages in the repository that can be imported
-- `data` folder: A folder for the data you reference with your code
-- `images` folder: A folder for the images you reference in your files
-- `code` folder: A folder for the python scripts that your Jupyter Notebook imports
-  - `__init__.py`: Python helper file that tells Python that there are packages in this folder that can be imported
-  - `data_cleaning.py`: Code to prepare data for analysis
-  - `visualizations.py`: Code to produce visualizations
-  - `eda_notebook.ipynb`: Notebook with any messy EDA so the main notebook can be more readable
-- `.gitignore`: A hidden file that tells git to not track certain files and folders
+* What genre has had the high average profit in the past 20 years?
+* What directors have had the highest average return in that genre?
+* What month of the year is good to release a major film?
+
+## Data
+***
+Data from IMDb provided information on the genre of films as well as their directors. Budget and ticket revenue was 
+taken from The Numbers. The data was filtered to include only movies with budgets over $10 million produced in the last 20 years
+to avoid including data of little revelance to the Microsoft project.
+
+## Methods
+***
+Data was grouped by genre and the mean and std of the worldwide profit for each genre was calculated.
+The data was also grouped by release monthn and the mean and std of the profit was calculated.
+Once a recommended genre was selected, the director data was filtered by genre and the mean and total profit
+that each director earned within that genre was calculated.
+
+## Results
+***
+The genre with the highest average profit of big budget movies with more than 20 films in the past 20 years is
+the Sci-Fi genre, followed closely by the Animation genre. Sci-Fi is a more risky pick thatn animation, but synergizes
+well with microsofts other properties and has the chance of the highest rewards
+
+![Genre Chart](/images/genre_chart.png)
+
+The month with the highest mean profit in the past 20 years is May, it is also a bit more risky than July.
+
+![Date Chart](/images/release_chart.png)
+
+The director with the highest mean profit per Sci-Fi movie release was Colin Trevorrow, but only release 1 Sci-FI film (Jurrasic WOrld)
+Josh Wheedon is the second highest, with more than one film in his track record.
+
+![Director Chart](/images/director_chart.png)
+
+## Conclusions
+***
+Stated recommendations:
+
+* Release a Sci-Fi film.
+* Hire Joss Whedon to direct it.
+* Aim to release the movie in May with July as a backup in case of delays.
+
+### Limitations and Future Work
+The calculation of the profit ofr each film only included ticket revenue and production budget. It did not include marketing budget
+nor did it include any revenues from associate film mechandise.
+
+Further analysis and research could help
+
+* Reanalyze profit data with data on marketing budgets
+* Investigate whether Microsoft has existing media brands that would fit well with a Sci-Fi film.
+* Investigate sales in the Sci-Fi novel genre and see if any highly selling books would make for a good adaptation.
