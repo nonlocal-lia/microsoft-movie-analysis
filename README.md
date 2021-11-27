@@ -84,8 +84,6 @@ For any additional questions, please contact **Lia Elwonger lelwonger@gmail.com*
 
 ## Repository Structure
 
-Describe the structure of your repository and its contents, for example:
-
 ```
 ├── README.md                           <- The top-level README for reviewers of this project
 ├── microsoft-movie-analysis.ipynb      <- Narrative documentation of analysis in Jupyter notebook
