@@ -35,15 +35,15 @@ to avoid including data of little revelance to the Microsoft project.
 ## Methods
 ***
 Data was grouped by genre and the mean and std of the worldwide profit for each genre was calculated.
-The data was also grouped by release monthn and the mean and std of the profit was calculated.
+The data was also grouped by release month and the mean and std of the profit was calculated.
 Once a recommended genre was selected, the director data was filtered by genre and the mean and total profit
 that each director earned within that genre was calculated.
 
 ## Results
 ***
 The genre with the highest average profit of big budget movies with more than 20 films in the past 20 years is
-the Sci-Fi genre, followed closely by the Animation genre. Sci-Fi is a more risky pick thatn animation, but synergizes
-well with microsofts other properties and has the chance of the highest rewards
+the Sci-Fi genre, followed closely by the Animation genre. Sci-Fi is a more risky pick than animation, but synergizes
+well with microsofts other properties and has the chance of the highest rewards.
 
 ![Genre Chart](/images/genre_chart.png)
 
@@ -51,7 +51,7 @@ The month with the highest mean profit for Sci-Fi movies in the past 20 years is
 
 ![Date Chart](/images/release_chart.png)
 
-The director with the highest mean profit per Sci-Fi movie release was Colin Trevorrow, but only release 1 Sci-FI film (Jurrasic World)
+The director with the highest mean profit per Sci-Fi movie release was Colin Trevorrow, but they only released 1 Sci-FI film (Jurrasic World)
 Joss Whedon is the second highest, with more than one film in his track record.
 
 ![Director Chart](/images/director_chart.png)
@@ -65,12 +65,12 @@ Stated recommendations:
 * Aim to release the movie in May with June as a backup in case of delays.
 
 ### Limitations and Future Work
-The calculation of the profit ofr each film only included ticket revenue and production budget. It did not include marketing budget
+The calculation of the profit of each film only included ticket revenue and production budget. It did not include marketing budget
 nor did it include any revenues from associate film mechandise.
 
 Further analysis and research could help
 
-* Reanalyze profit data with data on marketing budgets
+* Reanalyze profit data with data on marketing budgets and merchandise profits.
 * Investigate whether Microsoft has existing media brands that would fit well with a Sci-Fi film.
 * Investigate sales in the Sci-Fi novel genre and see if any highly selling books would make for a good adaptation.
 
