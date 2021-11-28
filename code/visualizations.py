@@ -62,7 +62,7 @@ def plot_top_ten(df, column_name, y_label, save_name):
     output_plot.set(xlabel="Profit in Millions of Dollars", ylabel=y_label,
                     title="Mean and Std of Profit by {}".format(y_label))
     output_plot.xaxis.set_major_formatter(mticker.FuncFormatter(ticks_to_money))
-    plt.savefig(f'images/{save_name}.png', transparent = True)
+    plt.savefig(f'images/{save_name}.png')
     return output_plot
 
 def month_plot(df,save_name):
@@ -85,5 +85,5 @@ def month_plot(df,save_name):
                'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     release_plot.set_xticklabels(xlabels, rotation=0)
     release_plot.yaxis.set_major_formatter(mticker.FuncFormatter(ticks_to_money))
-    plt.savefig(f'images/{save_name}.png', transparent = True)
+    plt.savefig(f'images/{save_name}.png')
     return release_plot
