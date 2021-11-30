@@ -78,7 +78,7 @@ Further analysis and research could help
 
 ## For More Information
 
-Please review my full analysis in [our Jupyter Notebook](./microsoft-movie-analysis.ipynb) or our [presentation](./Microsoft Movie Presentation.pdf).
+Please review my full analysis in [our Jupyter Notebook](./microsoft-movie-analysis.ipynb) or our [presentation](./Microsoft-Movie-Presentation.pdf).
 
 For any additional questions, please contact **Lia Elwonger lelwonger@gmail.com**
 
