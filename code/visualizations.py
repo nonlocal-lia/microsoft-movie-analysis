@@ -57,10 +57,14 @@ def plot_top_ten(df, column_name, y_label, save_name):
         save_name.png: a image of the plot saved to the /images/ folder
         output_plot: a barplot of the top 10 values for the input column with the input y label
     """
-    c = ['b', 'r']
+    c = ['c', 'm']
     output_plot = df.sort_values(by=column_name).tail(10).plot.barh(color=c)
     output_plot.set(xlabel="Profit in Millions of Dollars", ylabel=y_label,
                     title="Mean and Std of Profit by {}".format(y_label))
+    if 'Std of Profit' in df.columns:
+        output_plot.legend(['Average', 'Risk (std)'])
+    else:
+        output_plot.legend(['Average', 'Total'])
     output_plot.xaxis.set_major_formatter(mticker.FuncFormatter(ticks_to_money))
     plt.savefig(f'images/{save_name}.png')
     return output_plot
@@ -77,13 +81,14 @@ def month_plot(df,save_name):
         save_name.png: a image of the plot saved to the /images/ folder
         release_plot: a barplot of the values in the table by month with months labels with abrivations
     """
-    c = ['r', 'b']
+    c = ['m', 'c']
     release_plot = df.plot.bar(color=c)
     release_plot.set(xlabel="Months", ylabel="Mean Profit in Millions",
                      title="Mean and Std of Profit by Release Month")
     xlabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
                'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     release_plot.set_xticklabels(xlabels, rotation=0)
+    release_plot.legend(['Risk (std)', 'Average'])
     release_plot.yaxis.set_major_formatter(mticker.FuncFormatter(ticks_to_money))
     plt.savefig(f'images/{save_name}.png')
     return release_plot
