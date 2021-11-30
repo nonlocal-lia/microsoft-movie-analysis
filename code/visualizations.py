@@ -59,12 +59,15 @@ def plot_top_ten(df, column_name, y_label, save_name):
     """
     c = ['c', 'm']
     output_plot = df.sort_values(by=column_name).tail(10).plot.barh(color=c)
-    output_plot.set(xlabel="Profit in Millions of Dollars", ylabel=y_label,
-                    title="Mean and Std of Profit by {}".format(y_label))
+    
     if 'Std of Profit' in df.columns:
         output_plot.legend(['Average', 'Risk (std)'])
+        output_plot.set(xlabel="Profit in Millions of Dollars", ylabel=y_label,
+                    title="Mean and Std of Profit by {}".format(y_label))
     else:
         output_plot.legend(['Average', 'Total'])
+        output_plot.set(xlabel="Profit in Millions of Dollars", ylabel=y_label,
+                    title="Mean and Total of Profit by {}".format(y_label))
     output_plot.xaxis.set_major_formatter(mticker.FuncFormatter(ticks_to_money))
     plt.savefig(f'images/{save_name}.png')
     return output_plot
